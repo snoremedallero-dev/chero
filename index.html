@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Chero World ◈ — Aventura Salvadoreña 3D</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <!-- Lienzo WebGL principal -->
+  <canvas id="game-canvas"></canvas>
+
+  <!-- BARRA SUPERIOR UNIFICADA — identidad Chero World -->
+  <header id="game-topbar">
+    <div class="topbar-section-left">
+      <div class="game-brand">
+        <div class="brand-icon" aria-hidden="true">◈</div>
+        <div>
+          <div class="brand-name">CHERO WORLD <span class="brand-mark">SV</span></div>
+          <div id="location-tag" class="location-tag">⌖ Parque Central (Santa Ana)</div>
+        </div>
+      </div>
+      <div class="controls-area">
+        <button id="controls-help-btn" class="teleport-btn controls-btn" title="Mostrar u ocultar controles (H)" aria-expanded="false">▣ Controles</button>
+        <div id="controls-hint" class="controls-hint" hidden>
+          ◈ <b>Móvil / Tablet</b>: Joystick izq + arrastre der cámara + botones de acción<br>
+          ◈ <b>PC</b>: WASD mover · <b>Shift</b> correr · Espacio saltar · <b>Q</b> hablar · <b>G</b> pescar · <b>C</b> cámara · <b>B</b> skins · <b>H</b> controles · Clic der cámara · Clic izq bloques
+        </div>
+      </div>
+    </div>
+
+    <div class="topbar-section-right">
+      <div class="time-chip" title="Ciclo día/noche">
+        <span id="time-icon" class="time-icon" aria-hidden="true">☀</span>
+        <span id="time-period">Día</span>
+      </div>
+
+      <div class="health-container">
+        <div class="health-header">
+          <span>VITALIDAD</span>
+          <span id="health-text">100 / 100</span>
+        </div>
+        <div class="health-bar-bg"><div id="health-bar-fill"></div></div>
+      </div>
+
+      <div class="stamina-container">
+        <div class="stamina-header">
+          <span>ENERGÍA</span>
+          <span id="stamina-text">100 / 100</span>
+        </div>
+        <div class="stamina-bar-bg"><div id="stamina-bar-fill"></div></div>
+      </div>
+
+      <div class="leaderstats-panel">
+        <div class="leader-item"><span class="stat-glyph amber" aria-hidden="true">◆</span><span id="coins-display">Colones: 0</span></div>
+        <div class="leader-item bitcoin-item"><span class="stat-glyph teal" aria-hidden="true">₿</span><span id="bitcoins-display">0 BTC</span></div>
+        <div class="leader-item"><span class="stat-glyph coral" aria-hidden="true">✕</span><span id="deaths-display">0</span></div>
+        <div class="leader-item distance-item"><span class="stat-glyph teal" aria-hidden="true">◇</span><span id="distance-display">0 m</span></div>
+        <button id="camera-btn" class="teleport-btn camera-btn" title="Cambiar modo de cámara (C)">▣ Cámara</button>
+        <button id="skins-btn" class="teleport-btn skins-btn" title="Abrir inventario y tienda de skins (B)">◈ Skins</button>
+        <button id="sprites-btn" class="teleport-btn sprites-btn" title="Elegir sprite y ver los 100 desbloqueables">✦ Sprites</button>
+        <button id="fast-travel-btn" class="teleport-btn" title="Abrir mapa de viaje rápido">⌖ Mapa</button>
+        <button id="audio-toggle-btn" class="teleport-btn music-btn" title="Activar/Silenciar música">♫ Música</button>
+        <button id="reset-char-btn" class="reset-btn" title="Reaparecer en checkpoint">↺ Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ DESPLEGABLE DE VIAJE RÁPIDO -->
+  <div id="fast-travel-menu" class="game-panel">
+    <div class="menu-title">MUNDOS Y RUTAS:</div>
+    <button class="travel-item active" data-pos="0,4,10" data-world="central">◈ Parque Central de Santa Ana</button>
+    <button class="travel-item" data-pos="-26,4,18" data-world="pupuseria">◇ Pupusería "El Chivo Feliz"</button>
+    <button class="travel-item" data-pos="130,42,0" data-world="volcan">△ Volcán de Santa Ana</button>
+    <button class="travel-item" data-pos="0,4,140" data-world="playa">▽ Playa El Tunco</button>
+    <button class="travel-item" data-pos="-120,22,0" data-world="tazumal">⬡ Ruinas Mayas de Tazumal</button>
+    <button class="travel-item" data-pos="26,10,0" data-world="obby">≫ Pista Obby de Obstáculos</button>
+    <button class="travel-item" data-pos="-150,4,110" data-world="guija">≋ Lago de Güija · Pesca</button>
+    <button class="travel-item" data-pos="150,4,110" data-world="coatepeque">≋ Lago de Coatepeque · Pesca</button>
+    <button class="travel-item" data-pos="0,4,-120" data-world="lempa">≋ Río Lempa · Pesca</button>
+    <button class="travel-item" data-pos="-150,4,-120" data-world="mina">◆ Mina de Monedas</button>
+    <button class="travel-item" data-pos="300,4,314" data-world="izalco">⬢ Las Cenizas de Izalco · Cipitío</button>
+  </div>
+
+  <!-- SELECTOR DE CÁMARA: modos declarados en CameraModes.js -->
+  <div id="camera-menu" class="game-panel">
+    <div class="menu-title">MODO DE CÁMARA:</div>
+    <button class="camera-item active" data-camera-mode="tps">◈ TPS · Orbital</button>
+    <button class="camera-item" data-camera-mode="tps-close">◇ TPS · Cercana</button>
+    <button class="camera-item" data-camera-mode="fps">▽ FPS · Primera persona</button>
+    <button class="camera-item" data-camera-mode="top">⬡ Cenital · Mapa</button>
+  </div>
+
+  <!-- RETÍCULA Y ESTADO DE CONSTRUCCIÓN -->
+  <div id="build-crosshair" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div id="build-status"><span class="build-dot"></span><span id="build-status-text">Bloque Rojo</span></div>
+
+  <!-- NOTIFICACIÓN FLOTANTE -->
+  <div id="game-toast" class="toast-hidden"></div>
+
+  <!-- INDICADOR DE INTERACCIÓN CERCANA -->
+  <div id="interaction-prompt">Pulsa <b>[E]</b> para recoger</div>
+
+  <!-- BARRA DE OBJETO EN MANOS -->
+  <div id="held-item-bar"></div>
+
+  <!-- HOTBAR INFERIOR -->
+  <div id="hotbar-container">
+    <div class="hotbar-slot active" data-index="0"><span class="slot-number">1</span><div class="slot-preview" style="--slot-color:#C05342;"></div><span class="slot-label">Rojo</span></div>
+    <div class="hotbar-slot" data-index="1"><span class="slot-number">2</span><div class="slot-preview" style="--slot-color:#3E7CA8;"></div><span class="slot-label">Azul</span></div>
+    <div class="hotbar-slot" data-index="2"><span class="slot-number">3</span><div class="slot-preview" style="--slot-color:#E9A23B;"></div><span class="slot-label">Ámbar</span></div>
+    <div class="hotbar-slot" data-index="3"><span class="slot-number">4</span><div class="slot-preview" style="--slot-color:#4E9A78;"></div><span class="slot-label">Verde</span></div>
+    <div class="hotbar-slot" data-index="4"><span class="slot-number">5</span><div class="slot-preview" style="--slot-color:#7C8794;"></div><span class="slot-label">Piedra</span></div>
+    <div class="hotbar-slot" data-index="5"><span class="slot-number">6</span><div class="slot-preview glyph">✕</div><span class="slot-label">Demoler</span></div>
+  </div>
+
+  <!-- PANEL DE SKINS: INVENTARIO, MISIONES Y TIENDA -->
+  <div id="skins-panel" role="dialog" aria-label="Inventario y tienda de skins">
+    <div class="skins-card game-panel">
+      <div class="skins-header">
+        <div>
+          <div class="skins-title">◈ ARMERÍA CHERO</div>
+          <div class="skins-subtitle">Colecciona, compra y viste a tu leyenda</div>
+        </div>
+        <button id="skins-close-btn" class="cw-close-btn" aria-label="Cerrar panel">✕</button>
+      </div>
+
+      <div class="skins-wallet">
+        <span class="wallet-chip amber">◆ <span id="skins-colones">0</span> colones</span>
+        <span class="wallet-chip teal">₿ <span id="skins-bitcoins">0</span> BTC</span>
+        <span class="wallet-rate">1 ₿ = 100 ◆</span>
+        <button id="convert-btc-btn" class="wallet-convert-btn" title="Cambiar 100 colones por 1 bitcoin">◆100 → ₿1</button>
+        <button id="convert-colones-btn" class="wallet-convert-btn" title="Cambiar 1 bitcoin por 100 colones">₿1 → ◆100</button>
+      </div>
+
+      <div id="skins-grid" class="skins-grid"></div>
+
+      <div class="skins-footer">
+        Hay <b>100 sprites</b>: 5 iniciales y 95 bloqueados. Cumple metas de colones, distancia, checkpoints, pesca, mina, construcción y misiones de leyenda para desbloquearlos. Habla con <b>Cipitio</b>, <b>La Cihuanaba</b> y <b>El Sisimite</b> con <b>[Q]</b> para aceptar y reclamar sus misiones.
+      </div>
+    </div>
+  </div>
+
+  <!-- INICIO: SELECCIÓN DE SPRITE (100 en total, 95 bloqueados) -->
+  <div id="start-screen" class="start-screen" role="dialog" aria-label="Elige tu sprite inicial">
+    <div class="start-card game-panel">
+      <div class="start-header">
+        <div>
+          <div class="start-eyebrow">CHERO WORLD ◈</div>
+          <div class="start-title">ELIGE TU SPRITE</div>
+          <div class="start-subtitle">5 disponibles · 95 bloqueados · se desbloquean con metas del juego</div>
+        </div>
+        <div id="start-counter" class="start-counter">5 / 100 sprites desbloqueados</div>
+      </div>
+
+      <div class="start-preview">
+        <div id="start-preview-swatch" class="start-preview-swatch" aria-hidden="true"></div>
+        <div class="start-preview-info">
+          <div id="start-selected-name" class="start-selected-name">◈ Explorador Chero</div>
+          <div id="start-selected-desc" class="start-selected-desc">El atuendo inicial del viajero salvadoreño.</div>
+        </div>
+        <button id="start-close-btn" class="start-secondary-btn" hidden>VOLVER AL JUEGO</button>
+      </div>
+
+      <div id="start-sprite-grid" class="start-sprite-grid"></div>
+
+      <div class="start-footer">
+        <span>◇ Las tarjetas bloqueadas muestran su requisito y el progreso actual.</span>
+        <button id="start-enter-btn" class="start-primary-btn">◈ ENTRAR AL MUNDO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE VICTORIA -->
+  <div id="victory-modal">
+    <div class="victory-card">
+      <div class="victory-trophy-icon" aria-hidden="true">✦</div>
+      <div class="victory-title">¡QUÉ CHIVO! NIVEL COMPLETADO</div>
+      <div class="victory-subtitle">Conquistaste los desafíos salvadoreños y alcanzaste la meta.</div>
+      <button id="restart-btn" class="victory-btn">Continuar Jugando</button>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

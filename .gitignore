@@ -1,0 +1,20 @@
+# Dependencias y artefactos generados
+node_modules/
+dist/
+.vite/
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Metadatos locales del entorno
+.agents/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

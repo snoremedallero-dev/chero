@@ -47,6 +47,18 @@ En el mapa rápido, entrar a **⬢ Las Cenizas de Izalco · Cipitío**. Controle
 
 La victoria contra La Siguanaba entrega una hebra de la cabellera y `+150` colones. El progreso se guarda en `localStorage` bajo `chero_world_save`.
 
+## Despliegue gratuito en Render
+
+El repo incluye `render.yaml`, un Blueprint listo para Render:
+
+1. Entra a https://dashboard.render.com y elige **New → Blueprint**.
+2. Conecta el repositorio `snoremedallero-dev/chero`.
+3. Render detectará `render.yaml` y creará el servicio `chero-world`.
+4. El build ejecuta `npm ci && npm run build` y el arranque `node server/index.js`.
+5. La URL pública servirá a la vez el cliente y Socket.io; `/health` es el health check.
+
+El plan **Free** no requiere tarjeta. Limitaciones a tener en cuenta: el servicio se apaga tras 15 min sin tráfico y tarda ~1 min en despertar, y el estado de salas en memoria se reinicia al reiniciar el proceso. El progreso del jugador sigue en `localStorage`, así que no se pierde.
+
 ## Documentación
 
 - `NOTAS_DE_DISENO.md`: decisiones técnicas y de implementación.

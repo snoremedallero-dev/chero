@@ -70,6 +70,12 @@
 - `FishingWorld.getBuildSurfaces()` y `CoinMineWorld.getBuildSurfaces()` entregan sus suelos al `BuildingController` como superficies adicionales de raycast. La rejilla y el alcance no cambian porque esos suelos tienen la cara superior en `Y = 0`, igual que el baseplate.
 - El modo demoler solo elimina mallas que estén en `blockManager.getInteractableMeshes()`, nunca baseplate ni suelos de pesca/mina.
 
+## Créditos
+
+- **Jorge Galdamez** es el creador del proyecto: define la identidad Chero World, la adaptación del mito del Cipitío y las decisiones recogidas en `CIPITIO_GDD.md` y en este documento.
+- La sección dentro del juego reutiliza los tokens `--cw-*`, el recorte octogonal de `.game-panel` y glifos geométricos (`◈ ◇ ◆ ⬢ ✦`), sin emojis ni degradados.
+- Se abre desde el botón “✦ Creador” del topbar, desde el botón “✦ Creador” de la pantalla inicial o con `Y`; se cierra con `✕`, con `Y` o al hacer clic fuera. No guarda estado: es información, no progreso, y no interfiere con `H` (controles) ni con los atajos del Cipitío.
+
 ## Revisión y pendientes
 
 - `npm test`: 83/83 pruebas (incluyen cámara, selector HUD, pesca, mina, persistencia ampliada, 100 sprites, umbrales de desbloqueo, pantalla inicial, controles ocultos, mobiliario low poly, protocolo de red, cliente/servidor Socket.io, avatares remotos, superficies de construcción, ausencia de emojis, estilo toon y el prototipo del Cipitío). `npm run build`: correcto; permanece el aviso de chunk >500 kB por Three.js (el cliente de Socket.io ya sale en un chunk separado).

@@ -4,6 +4,8 @@
 
 **Convención de procedencia.** Las entradas marcadas **[Brief]** reproducen o parafrasean literalmente la propuesta original. Las marcadas **[Propuesta]** son decisiones de diseño añadidas para hacer el documento accionable; **no** deben leerse como parte del encargo original. Los nombres se conservan tal como aparecen en la propuesta.
 
+**Créditos.** Jorge Galdamez — creador de Chero World y autor de esta propuesta de diseño. El prototipo integrado en el juego conserva sus nombres, jefes, mecánicas y tono.
+
 ## Estado del prototipo en Chero World
 
 **[Propuesta]** El Capítulo 1 ya cuenta con un vertical slice jugable integrado en el juego existente. Se accede desde **Mapa → ⬢ Las Cenizas de Izalco · Cipitío**; el sector se monta en `(300, 0, 300)` con arena low poly, suelo físico y un HUD toon propio. La Siguanaba avisa, ataca, cambia a fase II al 50 % de vida y cae al llegar a cero.

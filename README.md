@@ -35,7 +35,7 @@ npm run build
 
 - `W/A/S/D` moverse, `Espacio` saltar, `Shift` correr.
 - `Q` hablar con leyendas, `E` recoger/soltar, `F` usar objeto, `G` pescar/minar.
-- `C` cámara, `B` skins, `H` ayuda de controles, `1`–`6` hotbar de construcción.
+- `C` cámara, `B` skins, `H` ayuda de controles, `Y` créditos del creador, `1`–`6` hotbar de construcción.
 
 ## Prototipo del Cipitío
 
@@ -46,6 +46,12 @@ En el mapa rápido, entrar a **⬢ Las Cenizas de Izalco · Cipitío**. Controle
 - `J` Duende, `K` Jaguar, `M` Torogoz.
 
 La victoria contra La Siguanaba entrega una hebra de la cabellera y `+150` colones. El progreso se guarda en `localStorage` bajo `chero_world_save`.
+
+## Créditos
+
+**Creador: Jorge Galdamez.** Autor de la idea, el diseño y la implementación de Chero World, incluido el prototipo jugable del Capítulo 1 de *Cipitío: El Despertar del Sombrerón* y su documento de diseño (`CIPITIO_GDD.md`).
+
+La sección también está dentro del juego: abre **✦ Creador** en la barra superior, pulsa `Y` o usa el botón **✦ Creador** de la pantalla inicial.
 
 ## Despliegue gratuito en Render
 

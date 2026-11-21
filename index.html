@@ -24,7 +24,7 @@
         <button id="controls-help-btn" class="teleport-btn controls-btn" title="Mostrar u ocultar controles (H)" aria-expanded="false">▣ Controles</button>
         <div id="controls-hint" class="controls-hint" hidden>
           ◈ <b>Móvil / Tablet</b>: Joystick izq + arrastre der cámara + botones de acción<br>
-          ◈ <b>PC</b>: WASD mover · <b>Shift</b> correr · Espacio saltar · <b>Q</b> hablar · <b>G</b> pescar · <b>C</b> cámara · <b>B</b> skins · <b>H</b> controles · Clic der cámara · Clic izq bloques
+          ◈ <b>PC</b>: WASD mover · <b>Shift</b> correr · Espacio saltar · <b>Q</b> hablar · <b>G</b> pescar · <b>C</b> cámara · <b>B</b> skins · <b>H</b> controles · <b>Y</b> creador · Clic der cámara · Clic izq bloques
         </div>
       </div>
     </div>
@@ -59,6 +59,7 @@
         <button id="camera-btn" class="teleport-btn camera-btn" title="Cambiar modo de cámara (C)">▣ Cámara</button>
         <button id="skins-btn" class="teleport-btn skins-btn" title="Abrir inventario y tienda de skins (B)">◈ Skins</button>
         <button id="sprites-btn" class="teleport-btn sprites-btn" title="Elegir sprite y ver los 100 desbloqueables">✦ Sprites</button>
+        <button id="creator-btn" class="teleport-btn creator-btn" title="Créditos del creador (Y)" aria-expanded="false">✦ Creador</button>
         <button id="fast-travel-btn" class="teleport-btn" title="Abrir mapa de viaje rápido">⌖ Mapa</button>
         <button id="audio-toggle-btn" class="teleport-btn music-btn" title="Activar/Silenciar música">♫ Música</button>
         <button id="reset-char-btn" class="reset-btn" title="Reaparecer en checkpoint">↺ Reset</button>
@@ -141,6 +142,37 @@
     </div>
   </div>
 
+  <!-- SECCIÓN DEL CREADOR: créditos visibles dentro del juego -->
+  <div id="creator-panel" role="dialog" aria-label="Créditos del creador">
+    <div class="creator-card game-panel">
+      <div class="creator-header">
+        <div>
+          <div class="creator-eyebrow">CHERO WORLD ◈ · CRÉDITOS</div>
+          <div class="creator-title">◇ EL CREADOR</div>
+          <div class="creator-subtitle">La aventura salvadoreña detrás del sombrero y las cenizas</div>
+        </div>
+        <button id="creator-close-btn" class="cw-close-btn" aria-label="Cerrar sección del creador">✕</button>
+      </div>
+
+      <div class="creator-name">Jorge Galdamez</div>
+      <div class="creator-role">◈ Idea, diseño e implementación</div>
+
+      <p class="creator-bio">
+        Creador de <b>Chero World</b> y autor de la propuesta de <b>Cipitío: El Despertar del Sombrerón</b>.
+        De su trabajo nacen el mundo low poly, las leyendas jugables y el combate de cenizas del Capítulo 1.
+      </p>
+
+      <ul class="creator-list">
+        <li><span class="creator-glyph" aria-hidden="true">◈</span><span><b>Concepto y dirección</b> — identidad Chero, mundo compartido y leyendas salvadoreñas.</span></li>
+        <li><span class="creator-glyph" aria-hidden="true">◆</span><span><b>Programación</b> — motor, física, construcción, UI y prototipo jugable del Cipitío.</span></li>
+        <li><span class="creator-glyph" aria-hidden="true">◇</span><span><b>Documentación</b> — <i>CIPITIO_GDD.md</i> y <i>NOTAS_DE_DISENO.md</i>.</span></li>
+        <li><span class="creator-glyph" aria-hidden="true">⬢</span><span><b>Mito y ambiente</b> — Izalco, La Siguanaba y el folclore que da sentido al duelo.</span></li>
+      </ul>
+
+      <div class="creator-footer">✦ Gracias por recorrer Cuscatlán. Pulsa <b>Y</b> para volver a abrir esta sección.</div>
+    </div>
+  </div>
+
   <!-- INICIO: SELECCIÓN DE SPRITE (100 en total, 95 bloqueados) -->
   <div id="start-screen" class="start-screen" role="dialog" aria-label="Elige tu sprite inicial">
     <div class="start-card game-panel">
@@ -166,7 +198,10 @@
 
       <div class="start-footer">
         <span>◇ Las tarjetas bloqueadas muestran su requisito y el progreso actual.</span>
-        <button id="start-enter-btn" class="start-primary-btn">◈ ENTRAR AL MUNDO</button>
+        <div class="start-footer-actions">
+          <button id="start-creator-btn" class="start-secondary-btn">✦ Creador</button>
+          <button id="start-enter-btn" class="start-primary-btn">◈ ENTRAR AL MUNDO</button>
+        </div>
       </div>
     </div>
   </div>

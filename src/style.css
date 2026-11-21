@@ -263,6 +263,7 @@ html, body {
 .teleport-btn { background: var(--cw-teal); }
 .music-btn { background: #4E7D6E; }
 .camera-btn { background: var(--cw-indigo); }
+.creator-btn { background: var(--cw-indigo); }
 
 .reset-btn:hover,
 .teleport-btn:hover { transform: translateY(-1px); filter: brightness(1.15); }
@@ -795,6 +796,94 @@ html, body {
 }
 .skins-footer b { color: var(--cw-amber); }
 
+/* ── Sección del creador: créditos toon sin emojis ── */
+#creator-panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(6, 24, 28, 0.97);
+}
+
+.creator-card {
+  width: min(560px, 96vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 18px 22px;
+  border-color: var(--cw-amber);
+}
+
+.creator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--cw-line);
+}
+.creator-eyebrow {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--cw-teal-light);
+}
+.creator-title {
+  margin-top: 4px;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--cw-sand);
+}
+.creator-subtitle { margin-top: 4px; font-size: 10px; line-height: 1.4; opacity: 0.75; }
+
+.creator-name {
+  margin-top: 16px;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: var(--cw-amber);
+}
+.creator-role { margin-top: 3px; font-size: 10px; letter-spacing: 1px; opacity: 0.8; }
+
+.creator-bio {
+  margin-top: 14px;
+  padding: 11px 13px;
+  background: var(--cw-panel-soft);
+  border-left: 3px solid var(--cw-teal-light);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.creator-bio b { color: var(--cw-sand); }
+
+.creator-list { list-style: none; display: grid; gap: 7px; margin-top: 14px; }
+.creator-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 9px 11px;
+  background: var(--cw-panel-soft);
+  border: 1px solid var(--cw-line);
+  font-size: 10px;
+  line-height: 1.45;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+.creator-list b { color: var(--cw-amber); }
+.creator-glyph { flex: 0 0 16px; color: var(--cw-teal-light); font-size: 13px; }
+
+.creator-footer {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--cw-line);
+  font-size: 9px;
+  letter-spacing: 0.6px;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+.creator-footer b { color: var(--cw-amber); }
+
 /* ── Pantalla de inicio: selector de 100 sprites ── */
 .start-screen {
   display: flex;
@@ -925,6 +1014,7 @@ html, body {
   font-size: 9px;
   opacity: 0.9;
 }
+.start-footer-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .start-primary-btn,
 .start-secondary-btn {
   flex-shrink: 0;

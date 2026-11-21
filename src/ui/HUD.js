@@ -26,6 +26,10 @@ export class HUD {
     this.controlsHint = document.getElementById('controls-hint');
     this.skinsBtn = document.getElementById('skins-btn');
     this.spritesBtn = document.getElementById('sprites-btn');
+    this.creatorBtn = document.getElementById('creator-btn');
+    this.startCreatorBtn = document.getElementById('start-creator-btn');
+    this.creatorPanel = document.getElementById('creator-panel');
+    this.creatorCloseBtn = document.getElementById('creator-close-btn');
     this.interactionPrompt = document.getElementById('interaction-prompt');
     this.heldItemBar = document.getElementById('held-item-bar');
     this.buildStatus = document.getElementById('build-status');
@@ -36,6 +40,7 @@ export class HUD {
     this.timePeriod = document.getElementById('time-period');
 
     this.toastTimeout = null;
+    this.creatorVisible = false;
     this.onTeleportRequested = null;
     this.onCameraModeSelected = null;
     this.onAudioToggle = null;
@@ -55,6 +60,40 @@ export class HUD {
     this.initControlsHelp();
     this.initSkinsToggle();
     this.initSpritesButton();
+    this.initCreatorPanel();
+  }
+
+  /** Créditos del creador: botón del topbar, botón inicial y tecla Y. */
+  initCreatorPanel() {
+    if (!this.creatorPanel) return;
+
+    [this.creatorBtn, this.startCreatorBtn].filter(Boolean).forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.setCreatorVisible(!this.creatorVisible);
+      });
+    });
+
+    this.creatorPanel.addEventListener('click', (e) => e.stopPropagation());
+
+    this.creatorCloseBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.setCreatorVisible(false);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.repeat || e.ctrlKey || e.altKey || e.metaKey || e.code !== 'KeyY') return;
+      this.setCreatorVisible(!this.creatorVisible);
+    });
+
+    window.addEventListener('click', () => this.setCreatorVisible(false));
+  }
+
+  setCreatorVisible(visible) {
+    if (!this.creatorPanel) return;
+    this.creatorVisible = Boolean(visible);
+    this.creatorPanel.style.display = this.creatorVisible ? 'flex' : 'none';
+    this.creatorBtn?.setAttribute('aria-expanded', String(this.creatorVisible));
   }
 
   initSpritesButton() {

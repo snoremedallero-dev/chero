@@ -10,6 +10,7 @@ function setup() {
    'bitcoins-display', 'skins-btn', 'sprites-btn', 'deaths-display', 'distance-display', 'location-tag', 'game-toast', 'victory-modal',
    'fast-travel-btn', 'fast-travel-menu', 'camera-btn', 'camera-menu', 'audio-toggle-btn',
    'controls-help-btn', 'controls-hint', 'interaction-prompt',
+   'creator-btn', 'start-creator-btn', 'creator-panel', 'creator-close-btn',
    'held-item-bar', 'build-status', 'build-status-text', 'build-crosshair',
    'time-icon', 'time-period'].forEach((id) => { ids[id] = createElement(); });
 
@@ -26,6 +27,10 @@ function setup() {
   ids['controls-help-btn'].addEventListener = (type, handler) => {
     ids['controls-help-btn'].listeners[type] = handler;
   };
+  ['creator-btn', 'start-creator-btn', 'creator-close-btn'].forEach((id) => {
+    ids[id].listeners = {};
+    ids[id].addEventListener = (type, handler) => { ids[id].listeners[type] = handler; };
+  });
   return { ids, selectors, hud: new HUD() };
 }
 
@@ -137,4 +142,23 @@ test('las instrucciones de controles permanecen ocultas hasta que se piden', () 
   assert.equal(ids['controls-help-btn'].getAttribute('aria-expanded'), 'false');
   assert.match(ids['controls-help-btn'].textContent, /Controles/);
   assert.equal(changes, 1);
+});
+
+test('la sección del creador se abre y cierra desde ambos botones y desde el cierre', () => {
+  const { ids, hud } = setup();
+  const click = (id) => ids[id].listeners.click({ stopPropagation() {} });
+
+  assert.equal(ids['creator-panel'].style.display, undefined);
+
+  click('start-creator-btn');
+  assert.equal(ids['creator-panel'].style.display, 'flex');
+  assert.equal(ids['creator-btn'].getAttribute('aria-expanded'), 'true');
+
+  click('creator-btn');
+  assert.equal(ids['creator-panel'].style.display, 'none');
+  assert.equal(ids['creator-btn'].getAttribute('aria-expanded'), 'false');
+
+  hud.setCreatorVisible(true);
+  click('creator-close-btn');
+  assert.equal(ids['creator-panel'].style.display, 'none');
 });
